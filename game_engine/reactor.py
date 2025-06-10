@@ -22,13 +22,13 @@ class ReactorCore:
         if self.coolant > 0 and self.cool_down_cooldown == 0:
             self.heat = max(0, self.heat - 10)
             self.coolant -= 10
-            self.cool_down_cooldown = 3
+            self.cool_down_cooldown = 2
 
     # release pressure from the reactor
     def release_pressure(self):
         if not self.valve_jammed and self.pressure_release_cooldown == 0:
             self.pressure = max(0, self.pressure - 15)
-            self.pressure_release_cooldown = 3
+            self.pressure_release_cooldown = 2
 
     def tick(self, passive=True):
         self.time_alive += 1
@@ -47,7 +47,7 @@ class ReactorCore:
                 self.malfunction = False
                 malfunction.fix_fn()
 
-        # 10% chance to trigger a random malfunction if none active
+        # 20% chance to trigger a random malfunction if none active
         if self.enable_random_events and not self.active_malfunctions and random.random() < 0.2:
             self.trigger_random_malfunction()
 
