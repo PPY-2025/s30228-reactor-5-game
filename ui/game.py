@@ -1,34 +1,35 @@
 import pygame
 import sys
 from game_engine.reactor import ReactorCore
+from database.db import save_score
 
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
 pygame.display.set_caption("Reactor 5")
-font = pygame.font.SysFont(None, 30)
+font = pygame.font.SysFont("Courier", 20)
 
 clock = pygame.time.Clock()
 reactor = ReactorCore()
 
-def draw_text(text, x, y, color=(255, 255, 255)):
-    surface = font.render(text, True, color)
-    screen.blit(surface, (x, y))
+def draw_text(surface, text, x, y, color=(0, 255, 0)):
+    text_surf = font.render(text, True, color)
+    surface.blit(text_surf, (x, y))
 
 def render():
     screen.fill((0, 0, 0))
 
     if not any(m.name == "Sensor Malfunction" for m in reactor.active_malfunctions):
-        draw_text(f"Coolant: {reactor.coolant}", 20, 20)
-        draw_text(f"Heat: {reactor.heat}", 20, 60)
-        draw_text(f"Pressure: {reactor.pressure}", 20, 100)
+        draw_text(screen, f"Coolant: {reactor.coolant}", 20, 20)
+        draw_text(screen, f"Heat: {reactor.heat}", 20, 60)
+        draw_text(screen, f"Pressure: {reactor.pressure}", 20, 100)
 
 
-    draw_text("Malfunctions:", 20, 160)
+    draw_text(screen, "Malfunctions:", 20, 160)
     for idx, mal in enumerate(reactor.active_malfunctions):
-        draw_text(f"{idx + 1}. {mal.name} (Ticks Left: {mal.duration})", 40, 190 + 30 * idx)
+        draw_text(screen, f"{idx + 1}. {mal.name} (Ticks Left: {mal.duration})", 40, 190 + 30 * idx)
 
-    draw_text("1 - cool, 2 - valve, 3 - power, 4 - sensors, 5 - lockdown", 20, 530)
-    draw_text("C - cool down, P - release pressure", 20, 560)
+    draw_text(screen, "1 - cool, 2 - valve, 3 - power, 4 - sensors, 5 - lockdown", 20, 530)
+    draw_text(screen, "C - cool down, P - release pressure", 20, 560)
 
     pygame.display.flip()
 
@@ -63,13 +64,12 @@ def game_over_screen(message):
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    pygame.quit()
-                    sys.exit()
+                    return "menu"
                 elif event.key == pygame.K_r:
-                    return
+                    return "restart"
         clock.tick(10)
 
-def run_game():
+def run_game(username):
     global reactor
     reactor = ReactorCore()
 
@@ -84,8 +84,13 @@ def run_game():
 
             reason = game_over()
             if reason:
-                game_over_screen(reason)
-                return
+                survival_time = reactor.time_alive*3
+                save_score(username, survival_time)
+                result = game_over_screen(reason)
+                if result == "restart":
+                    return "restart"
+                elif result == "menu":
+                    return "menu"
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -116,6 +121,3 @@ def run_game():
                     reactor.red_button = True
         render()
         clock.tick(30)
-
-while True:
-    run_game()
