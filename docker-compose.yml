@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: reactor_web
+    ports:
+      - "5001:5000"
+    environment:
+      - FLASK_ENV=development
+      - MONGODB_URI=mongodb://mongodb:27017/
+      - PYTHONUNBUFFERED=1  # This ensures Python output is sent straight to terminal
+      - PORT=5000
+    depends_on:
+      - mongodb
+    volumes:
+      - ./templates:/app/templates
+      - ./static:/app/static
+      - ./database:/app/database
+      - ./game_engine:/app/game_engine
+    networks:
+      - reactor-network
+
+  mongodb:
+    image: mongo:7
+    container_name: reactor_mongo
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - reactor-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  reactor-network:
+    driver: bridge 
