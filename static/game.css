@@ -1,0 +1,211 @@
+/* Terminal-style font */
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+body {
+    background-color: #000;
+    color: #00ff00;
+    font-family: 'VT323', monospace;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#status-bar {
+    background-color: #001100;
+    padding: 10px;
+    border-bottom: 2px solid #00ff00;
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    box-sizing: border-box;
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+}
+
+.status-bar {
+    width: 150px;
+    height: 20px;
+    background-color: #001100;
+    border: 1px solid #00ff00;
+    position: relative;
+}
+
+.status-bar-fill {
+    height: 100%;
+    background-color: #00ff00;
+    transition: width 0.3s ease;
+}
+
+#main-terminal {
+    flex-grow: 1;
+    background-color: #001100;
+    border: 2px solid #00ff00;
+    margin: 10px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.control-section {
+    border: 1px solid #00ff00;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: rgba(0, 17, 0, 0.5);
+}
+
+.control-section h2 {
+    margin-top: 0;
+    border-bottom: 1px solid #00ff00;
+    padding-bottom: 5px;
+    font-size: 20px;
+    color: #00ff00;
+}
+
+.control-button {
+    background-color: #001100;
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    font-family: 'VT323', monospace;
+    font-size: 16px;
+    transition: all 0.2s;
+    width: calc(100% - 10px);
+    text-align: left;
+}
+
+.control-button:hover {
+    background-color: #002200;
+    box-shadow: 0 0 10px #00ff00;
+}
+
+.control-button:active {
+    background-color: #003300;
+}
+
+.control-button:disabled {
+    transition: none !important;
+    cursor: not-allowed;
+}
+
+#malfunction-log {
+    border: 1px solid #00ff00;
+    padding: 15px;
+    background-color: rgba(0, 17, 0, 0.5);
+    height: 150px;
+    overflow-y: auto;
+}
+
+.malfunction-entry {
+    margin-bottom: 5px;
+    font-size: 20px;
+    color: #00ff00;
+    border-bottom: 1px solid #003300;
+    padding-bottom: 5px;
+}
+
+.malfunction-entry.warning {
+    color: #ffff00;
+}
+
+.malfunction-entry.danger {
+    color: #ff0000;
+}
+
+/* CRT screen effect */
+#main-terminal::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15),
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+}
+
+/* Scanline effect */
+#main-terminal::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        to bottom,
+        transparent 50%,
+        rgba(0, 0, 0, 0.25) 50%
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+}
+
+/* Game Over Overlay */
+#game-over-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#game-over-overlay.hidden {
+    display: none;
+}
+
+.game-over-window {
+    background-color: #001100;
+    border: 2px solid #00ff00;
+    padding: 30px;
+    text-align: center;
+    min-width: 400px;
+}
+
+.game-over-window h2 {
+    color: #ff0000;
+    font-size: 36px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+#game-over-message {
+    color: #ffffff;
+    font-size: 24px;
+    margin-bottom: 30px;
+    min-height: 30px;
+}
+
+.game-over-buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.game-over-buttons .control-button {
+    min-width: 150px;
+    font-size: 18px;
+} 
