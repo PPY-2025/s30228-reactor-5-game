@@ -1,20 +1,48 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for
+from flask import Flask, render_template, request, jsonify, redirect, url_for, send_from_directory
 from database.db import save_score, get_leaderboard, get_user, create_user
 from database.models import User
 from datetime import datetime
+import os
+import logging
+from dotenv import load_dotenv
 
-app = Flask(__name__)
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger(__name__)
+
+# Load environment variables
+load_dotenv()
+
+# Create Flask app with explicit template and static folders
+app = Flask(__name__,
+            template_folder='templates',
+            static_folder='static',
+            static_url_path='/static')
+
+# Configure MongoDB connection
+app.config['MONGODB_URI'] = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/')
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    logger.debug('Accessing index route')
+    try:
+        return render_template('index.html')
+    except Exception as e:
+        logger.error(f'Error rendering index template: {str(e)}')
+        raise
 
 @app.route('/game')
 def game():
-    return render_template('game.html')
+    logger.debug('Accessing game route')
+    try:
+        return render_template('game.html')
+    except Exception as e:
+        logger.error(f'Error rendering game template: {str(e)}')
+        raise
 
 @app.route('/api/save_score', methods=['POST'])
 def api_save_score():
+    logger.debug('Accessing save_score route')
     data = request.get_json()
     username = request.cookies.get('username')
     if not username:
@@ -29,11 +57,13 @@ def api_save_score():
 
 @app.route('/api/leaderboard')
 def api_leaderboard():
+    logger.debug('Accessing leaderboard route')
     leaderboard = get_leaderboard()
     return jsonify(leaderboard)
 
 @app.route('/api/start_game', methods=['POST'])
 def start_game():
+    logger.debug('Accessing start_game route')
     data = request.get_json()
     username = data.get('username')
     
@@ -48,5 +78,17 @@ def start_game():
     response.set_cookie('username', username)
     return response
 
+# Serve static files
+@app.route('/static/<path:path>')
+def send_static(path):
+    logger.debug(f'Accessing static file: {path}')
+    try:
+        return send_from_directory('static', path)
+    except Exception as e:
+        logger.error(f'Error serving static file {path}: {str(e)}')
+        raise
+
 if __name__ == '__main__':
-    app.run(debug=True) 
+    port = int(os.environ.get('PORT', 5000))
+    logger.info(f'Starting Flask application on port {port}')
+    app.run(host='0.0.0.0', port=port, debug=True, use_reloader=False) 
