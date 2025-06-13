@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>REACTOR 5: Employment Portal</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div id="container" class="paper-page">
+
+    <!-- Welcome Letter -->
+    <section id="welcome" class="page visible">
+      <img src="/static/assets/paper-bg.png" class="paper" alt="Paper">
+
+      <div class="letter">
+        <img src="/static/assets/corp-logo.png" class="logo" alt="Corp Logo">
+        <h1>Welcome, Employee #████</h1>
+        <p>Thank you for joining the <strong>REACTOR 5 Oversight Program</strong>.</p>
+        <p>Your position is critical. We regret to inform you that turnover in this department is... unusually high.</p>
+        <p>Our legal team assures us this is not a cause for concern.</p>
+        <p>Please proceed to acknowledge and sign the liability waiver on its respective section using divider on your left.</p>
+      </div>
+    </section>
+
+    <!-- Waiver & Username -->
+    <section id="waiver" class="page">
+      <img src="/static/assets/paper-bg.png" class="paper" alt="Paper">
+
+      <div class="letter">
+        <h2>Employee Waiver Form</h2>
+        <p>I, the undersigned, acknowledge all risks, including but not limited to incineration, meltdown, and psychic collapse. I hereby waive any and all rights to safety or compensation.</p>
+        <label for="username">Signature (Your Employee ID):</label>
+        <input type="text" id="username" maxlength="20" oninput="checkUsername()">
+        <button id="startButton" disabled onclick="startGame()">Begin Shift</button>
+      </div>
+    </section>
+
+    <!-- Additional Pages -->
+
+    <section id="protocol" class="page">
+      <img src="/static/assets/paper-bg.png" class="paper" alt="Paper">
+
+      <div class="letter">
+        <h4>Reactor Operation Protocol
+        Classified: Internal Use Only</h4>
+        <hr class="solid">
+        <h4>Reactor Control Room — Operational Directive 04-A</h4>
+        <p>All personnel are required to adhere strictly to the following procedures.</p>
+        <ol>
+          <li>Your identification badge must remain visible at all times. You are not irreplaceable.
+            But your clearance is.</li>
+          <li>Should internal temperature begin to rise, engage the designated coolant control on the
+            main console.</li>
+          <li>Increased core pressure must be addressed immediately. Utilize the pressure release valve
+            on the console interface.</li>
+          <li>The system will alert you of any faults or instabilities. Engage the appropriate repair protocol
+            button without delay.</li>
+          <li>If all measures fail - then, and only then, may you engage the red panic override.</li>
+          <li>You're the last line. Follow the protocol. Good luck.</li>
+        </ol>
+        <hr class="solid">
+        <p>All reactor interactions are logged. Noncompliance is not invisible.</p>
+      </div>
+    </section>
+
+    <section id="notes" class="page">
+      <img src="/static/assets/paper-bg.png" class="paper" alt="Paper">
+
+      <div class="letter">
+        <h2>LOG 019</h2>
+        <p>Technician: M. Kovalsky</p>
+        <p>Reactor stable today. Replaced coolant valve #7 again. That's the third time this month.
+          They keep sending the same parts. Like spitting on a leak and calling it fixed.
+          Management's idea of "preventive maintenance" is duct tape and denial.</p>
+
+        <hr class="solid">
+
+        <h2>LOG 024</h2>
+        <p>Technician: E. Delgado</p>
+        <p>Temperature spikes at 02:14. No reason. No warning. Just climbed.
+          I used the button. It stopped.
+          But I swear — I swear I heard something behind the console. Clicking. Like teeth.</p>
+
+        <hr class="solid">
+
+        <h2>LOG 031</h2>
+        <p>Technician: Unknown</p>
+        <p>[Entry was never officially logged. Found scrawled on back of inspection checklist.]
+          Don't trust the system diagnostics. It tells you what it thinks you want to hear.
+          Pressure "nominal"? Then why did the glass bend last night?
+          I'm not crazy. I recorded it. But the footage is gone.
+          It deletes what it doesn't like. Like them.</p>
+
+        <hr class="solid">
+
+        <h2>LOG 036</h2>
+        <p>Technician: E. Delgado</p>
+        <p>No one saw Kovalsky leave. No goodbye. No clearance log. Just gone.
+          They said he transferred to Outpost V.
+          Outpost V was decommissioned last winter.
+          I checked. I CHECKED.
+          I'm next, aren't I?</p>
+
+        <hr class="solid">
+
+        <h2>LOG 041</h2>
+        <p>Technician: A. R.</p>
+        <p>New recruit asked what the red button does. I told him, "It's your final prayer."
+          He laughed.
+          I didn't.
+          …I think the reactor listens when we joke about it.</p>
+
+        <hr class="solid">
+
+        <h2>[REDACTED LOG]</h2>
+        <p>
+          they want us to babysit a monster in a metal crib
+          feed it lies, pat its head when it screams
+          this isn't a reactor
+          it's a ritual
+          and every time we press those buttons
+          we tell it: we're still afraid.
+        </p>
+
+        <hr class="solid">
+
+        <h3>Found on back wall, etched into metal with a screwdriver:</h3>
+        <p>
+          THEY DON'T FIRE YOU.
+          THEY SEAL YOU IN.
+        </p>
+      </div>
+    </section>
+
+    <section id="leaderboard" class="page">
+      <img src="/static/assets/paper-bg.png" class="paper" alt="Paper">
+
+      <div class="letter">
+        <h2>Top Technicians</h2>
+        <div id="leaderboard-list">
+          <!-- Will be populated by JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <div class="tabs-vertical">
+      <button onclick="showPage('welcome')">Welcome</button>
+      <button onclick="showPage('waiver')">Waiver</button>
+      <button onclick="showPage('protocol')">Protocol</button>
+      <button onclick="showPage('notes')">Notes</button>
+      <button onclick="showPage('leaderboard')">Leaderboard</button>
+    </div>
+  </div>
+  <script src="/static/script.js"></script>
+</body>
+</html>

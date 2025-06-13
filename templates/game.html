@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>REACTOR 5: Control Terminal</title>
+    <link rel="stylesheet" href="/static/game.css">
+</head>
+<body>
+    <div id="status-bar">
+        <div class="status-indicator">
+            <span>COOLANT:</span>
+            <div class="status-bar">
+                <div class="status-bar-fill" id="coolant-bar" style="width: 100%"></div>
+            </div>
+        </div>
+        <div class="status-indicator">
+            <span>PRESSURE:</span>
+            <div class="status-bar">
+                <div class="status-bar-fill" id="pressure-bar" style="width: 0%"></div>
+            </div>
+        </div>
+        <div class="status-indicator">
+            <span>HEAT:</span>
+            <div class="status-bar">
+                <div class="status-bar-fill" id="heat-bar" style="width: 0%"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="main-terminal">
+        <div id="left-panel">
+            <div class="control-section">
+                <h2>REACTOR CONTROLS</h2>
+                <button class="control-button coolant" onclick="handleAction('coolant')">COOL DOWN REACTOR</button>
+                <button class="control-button pressure" onclick="handleAction('pressure')">RELEASE PRESSURE</button>
+            </div>
+
+            <div class="control-section">
+                <h2>MALFUNCTION CONTROLS</h2>
+                <div class="malfunction-controls">
+                    <button onclick="handleAction('fix-leak')" class="control-button">FIX COOLANT LEAK</button>
+                    <button onclick="handleAction('unjam-valve')" class="control-button">UNJAM VALVE</button>
+                    <button onclick="handleAction('fix-surge')" class="control-button">RESET CIRCUIT</button>
+                    <button onclick="handleAction('fix-sensor')" class="control-button">CALIBRATE SENSORS</button>
+                </div>
+            </div>
+
+            <div id="malfunction-log">
+                <h3>SYSTEM LOG</h3>
+                <div class="malfunction-entry">System initialized. Awaiting commands...</div>
+            </div>
+        </div>
+
+        <div id="right-panel">
+            <div class="control-section">
+                <h2>EMERGENCY PROTOCOL</h2>
+                <button class="control-button always-active" onclick="handleAction('panic')" style="background-color: #330000; border-color: #ff0000; color: #ff0000;">
+                    EMERGENCY SHUTDOWN
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Over Overlay -->
+    <div id="game-over-overlay" class="hidden">
+        <div class="game-over-window">
+            <h2>GAME OVER</h2>
+            <div id="game-over-message"></div>
+            <div class="game-over-buttons">
+                <button onclick="restartGame()" class="control-button">RESTART GAME</button>
+                <button onclick="quitToMenu()" class="control-button">QUIT TO MENU</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/game.js"></script>
+</body>
+</html> 
