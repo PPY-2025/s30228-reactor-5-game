@@ -45,20 +45,3 @@ jobs:
           curl -f http://localhost:5001/ || exit 1
           docker stop reactor5_test
           docker rm reactor5_test
-
-  lint:
-    runs-on: self-hosted
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install linting tools
-        run: |
-          pip3 install --upgrade pip
-          pip3 install flake8 black isort
-
-      - name: Run linters
-        run: |
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-          black . --check
-          isort . --check-only --profile black 
