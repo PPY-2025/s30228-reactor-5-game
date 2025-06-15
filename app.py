@@ -1,7 +1,6 @@
-from flask import Flask, render_template, request, jsonify, redirect, url_for, send_from_directory
-from database.db import save_score, get_leaderboard, get_user, create_user
+from flask import Flask, render_template, request, jsonify, send_from_directory
+from database.db import save_score, get_leaderboard, create_user
 from database.models import User
-from datetime import datetime
 import os
 import logging
 from dotenv import load_dotenv
@@ -19,8 +18,12 @@ app = Flask(__name__,
             static_folder='static',
             static_url_path='/static')
 
-# Configure MongoDB connection
-app.config['MONGODB_URI'] = os.getenv('MONGODB_URI', 'mongodb://localhost:27017/')
+# Configure MongoDB connection and security
+app.config['MONGODB_URI'] = os.getenv('MONGODB_URI')
+app.config['SECRET_KEY'] = os.getenv('FLASK_SECRET_KEY')
+app.config['SESSION_COOKIE_SECURE'] = True  # Only send cookies over HTTPS
+app.config['SESSION_COOKIE_HTTPONLY'] = True  # Prevent JavaScript access to cookies
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'  # Protect against CSRF
 
 @app.route('/')
 def index():
@@ -89,6 +92,6 @@ def send_static(path):
         raise
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
+    port = int(os.environ.get('PORT'))
     logger.info(f'Starting Flask application on port {port}')
     app.run(host='0.0.0.0', port=port, debug=True, use_reloader=False) 

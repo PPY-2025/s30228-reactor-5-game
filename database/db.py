@@ -1,11 +1,9 @@
 from pymongo import MongoClient
-from pymongo.collection import Collection
 from database.models import *
-import os
 from flask import current_app
 
 def get_mongo_client():
-    mongo_uri = current_app.config.get('MONGODB_URI', 'mongodb://localhost:27017/')
+    mongo_uri = current_app.config.get('MONGODB_URI')
     return MongoClient(mongo_uri)
 
 def get_db():
