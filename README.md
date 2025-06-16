@@ -1,3 +1,5 @@
+[![AltText](https://github.com/PPY-2025/s30228-reactor-5-game/blob/main/Reactor-5.png)](https://www.canva.com/design/DAGqebQrYh0/b03z_9xNkB64-M3XGvQy5Q/edit?utm_content=DAGqebQrYh0&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
+
 # ☢️ Reactor 5  ![CI Pipeline](https://github.com/PPY-2025/s30228-reactor-5-game/actions/workflows/ci.yml/badge.svg)
 Reactor 5 is a terminal-style survival game where players fight against the ticking clock of a nuclear meltdown. Built with Python and Flask for the backend and HTML + CSS + JS for the interface, it stores user data and survival scores in MongoDB.
 
